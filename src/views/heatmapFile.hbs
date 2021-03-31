@@ -1,8 +1,11 @@
+
 <!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{csrfToken}}">
     <title>Heatmaps</title>
     <!-- Bootstrap CSS CDN -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
@@ -39,13 +42,13 @@
 
                         </ul>
               </li>
-              <li class ="active">
+              <li>
                   <a href="/">
                       <i class="fas fa-map"></i>
                       Heatmap
                   </a>
               </li>
-              <li>
+              <li class="active">
                   <a href="/heatmap/upload">
                       <i class="fas fa-chart-line"></i>
                       Upload File
@@ -58,7 +61,6 @@
                       Setting Parameters
                   </a>
               </li>
-
 
               <li>
                 <a href="/logout">
@@ -97,16 +99,13 @@
                 <label for="attribute-control">Parameters  </label>
                 <select id = "attribute-control" class="map-control">
                   <option value="None">None</option>
-                  <option value="pH">pH Level</option>
-                  <option value="EC">EC </option>
-                  <option value="NO3">NO3</option>
-                  <option value="Ca">Ca</option>
-                  <option value="K">K</option> 
                 </select>
 
                 <label for="centering-control">Location</label>
                 <select id = "centering-control" class="map-control">
                   <option value="Default">Default</option>
+                  <option value="sadao">Sadao</option>
+                  <option value="chalung">Chalung</option>
                 </select>
               </div>
 
@@ -119,29 +118,23 @@
 
                   <label for="sampling-date-control">Date</label>
                     <select id = "sampling-date-control" class="map-control">
-                      <option value="any">any</option>
-                  </select>
-              </div>
-              <div>
-                <label for="sample-value-control">Sample Value</label>
-                    <select id = "sample-value-control" class="map-control">
-                     <option value="Enabled">Enabled</option>
-                    <option value="Disabled">Disabled</option>
+                      <option value="any">Any</option>
                   </select>
               </div>
               <div>
                   <button type="button" onclick="handleInformation()"> Information </button> 
-                  <button type="button" onclick="downloadAsExcel()"> Download </button>
+                  <input type = "file" id="file-selector" accept = ".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" />
+                  <button type="button" id="upload-file-btn" onclick="uploadDataToDatabase()"> Upload </button> 
               </div>
             </div>
             
             <!-- Legend panel -->
             <div id="legend">
-              <div id="census-min">min</div>
+              <div id="census-max">max</div>
               <div class="color-key">
                 <span id="data-caret">&#x25c6;</span>
               </div>
-              <div id="census-max">max</div>
+              <div id="census-min">min</div>
             </div>
 
             <!-- Recommendation panel -->
@@ -426,7 +419,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> 
 
     <!-- The core Firebase JS SDK is always required and must be listed first -->
     <script src="https://www.gstatic.com/firebasejs/7.11.0/firebase-app.js"></script>
@@ -446,9 +439,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
-    <script src="/js/heatmap.js"> </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/jszip.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/xlsx.js"></script>
+
+    <script src="/js/heatmapFileUpload.js"></script>
     <script src="/js/sidebar.js"></script>
-    <!-- <script src="js/admin.js"> </script> -->
 
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAmd3Ydn0A1aS2XeXOsAMlKOQlZY9iF0ek&libraries=visualization&callback=initMap" >
     </script>

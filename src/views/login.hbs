@@ -3,7 +3,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Geographic Research - Login</title>
-    <meta name="csrf-token" content="u1u14nTq-eAms45ypQPj-1SC3iOfbs9X6CQ4">
+    <meta name="csrf-token" content="{{csrfToken}}">
     <link rel="stylesheet" href="/css/login.css">
     <script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-app.js" defer ></script>
     <script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-auth.js" defer ></script>
@@ -13,9 +13,9 @@
     <main> 
         <section>
             <form id="login">
-                <h1> Login </h1>
+                <center> <h1> Login </h1> </center>
                 <div class="col">
-                    <input type="hidden" name="_csrf" value="u1u14nTq-eAms45ypQPj-1SC3iOfbs9X6CQ4">
+                    <input type="hidden" name="_csrf" value="{{csrfToken}}">
                     <input type="text" name="username" placeholder="Username" required>
                     <input type="password" name="password" minlength="8" placeholder="Password" required>
                     <input type="submit" value="Login">    
@@ -29,3 +29,4 @@
     </main>
 </body>
 </html>
+

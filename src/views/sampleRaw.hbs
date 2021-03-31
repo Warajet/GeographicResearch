@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="csrf-token" content="hjmp5Rlf-FCx23qYhDbDAyGuWPQNgfvvkIjc">
+        <meta name="csrf-token" content="{{csrfToken}}">
         <title>Sadao Geospatial data</title>
         <!-- Bootstrap CSS CDN -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
@@ -114,11 +114,6 @@
                                         <i class="fas fa-align-left"></i>
                                         <span>Download</span>
                                     </button>
-
-                                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#insertionModal">
-                                        <i class="fas fa-plus"></i>
-                                        <span>Add</span>
-                                    </button>
                                 </div>
                         </div>
                     </div>
@@ -128,16 +123,13 @@
                     <table class="table" id="sample_table">
                         <thead class="thead-dark">
                             <tr>
-                                <th>Node ID</th>
-                                <th>Field</th>
+                                <th>Sample ID</th>
+                                <th>Name </th>
+                                <th>Owner </th>
+                                <th>Field </th>
                                 <th>Latitude</th>
                                 <th>Longitude</th>
-                                <th>Date</th>
-                                <th>pH</th>
-                                <th>EC</th>
-                                <th>NO3</th>
-                                <th>Ca</th>
-                                <th>K</th>
+                                <th>Collected Date </th>
                             </tr>
                         </thead>
                         <tbody>
@@ -148,6 +140,7 @@
             </div>
         </div>
 
+        {{!-- Modal for Data Deletion --}}
         <div class="modal" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
@@ -168,47 +161,50 @@
             </div>
         </div>
 
-        <div class="modal" id="insertionModal" tabindex="-1" role="dialog" aria-labelledby="insertionModalLabel" aria-hidden="true" data-backdrop="false">
+                        {{!-- Modal for Data Insertion --}}
+        <div class="modal" id= "sampleTestModal" tabindex="-1" role="dialog" aria-labelledby="sampleTestModalLabel" aria-hidden="true" data-backdrop="false">
                     <div class="modal-dialog modal-dialog-centered" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="insertionModalLabel">Inserting Sample</h5>
+                                <h5 class="modal-title" id="sampleTestModalLabel">Inserting Sample</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <form id="submit-data-form">
+                                <form id="submit-raw-sample-form">
+
                                     <div class="form-group">
                                         <label class="control-label">Sample name</label>
                                         <div>
-                                            <input type="text" class="form-control input-lg" name="sampleId" value="">
+                                            <input type="text" class="form-control input-lg" name="sampleId" id="sampleId" value="">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label">Collected Date</label>
                                         <div>
-                                            <input type="date" class="form-control input-lg" name="collectedDate" value="">
+                                            <input type="date" class="form-control input-lg" name="collectedDate" id="collectedDate" value="">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label">Field</label>
                                         <div>
-                                            <input type="text" class="form-control input-lg" name="location" value="">
+                                            <input type="text" class="form-control input-lg" name="field" id="field" value="">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label">Latitude</label>
                                         <div>
-                                            <input type="text" class="form-control input-lg" name="latitude" value="">
+                                            <input type="text" class="form-control input-lg" name="latitude" id="latitude" value="">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label">Longitude</label>
                                         <div>
-                                            <input type="text" class="form-control input-lg" name="longitude" value="">
+                                            <input type="text" class="form-control input-lg" name="longitude" id="longitude" value="">
                                         </div>
                                     </div>
+
                                     <div class="form-group">
                                         <label class="control-label">pH</label>
                                         <div>
@@ -241,7 +237,7 @@
                                     </div>
                                     <div class="form-group">
                                         <div>
-                                            <button type="submit" id= "modal-btn-add" class="btn btn-success"> Add</button>
+                                            <button type="submit" id= "modal-btn-add" class="btn btn-success"> Submit</button>
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                         </div>
                                     </div>
@@ -260,13 +256,14 @@
     
         <script src="https://www.gstatic.com/firebasejs/7.11.0/firebase-auth.js"></script>
         <script src="https://www.gstatic.com/firebasejs/7.11.0/firebase-database.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.11.0/firebase-firestore.js"></script>
 
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     
         <script src="/js/firebase_init.js"></script>
-        <script async defer src="/js/admin.js"> </script>   
+        <script src="/js/adminRawSample.js"> </script>   
         <script src="/js/sidebar.js"></script> 
     </body>
 </html>
