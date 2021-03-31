@@ -1,0 +1,31 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geographic Research - Login</title>
+    <meta name="csrf-token" content="u1u14nTq-eAms45ypQPj-1SC3iOfbs9X6CQ4">
+    <link rel="stylesheet" href="/css/login.css">
+    <script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-app.js" defer ></script>
+    <script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-auth.js" defer ></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js" defer ></script>
+</head>
+<body>
+    <main> 
+        <section>
+            <form id="login">
+                <h1> Login </h1>
+                <div class="col">
+                    <input type="hidden" name="_csrf" value="u1u14nTq-eAms45ypQPj-1SC3iOfbs9X6CQ4">
+                    <input type="text" name="username" placeholder="Username" required>
+                    <input type="password" name="password" minlength="8" placeholder="Password" required>
+                    <input type="submit" value="Login">    
+                    <button onclick= "window.location.href='/signup';" class="signup btn"> Sign Up </button>
+                </div>
+            </form>
+        </section>
+        
+        <script defer src="/js/firebase_init.js"></script>
+        <script defer src="/js/login.js"></script>
+    </main>
+</body>
+</html>
