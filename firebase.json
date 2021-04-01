@@ -1,13 +1,14 @@
 {
   "hosting": {
-    "public": "packages/www/public",
+    "public": "public",
     "ignore": [
       "firebase.json",
       "**/.*",
       "**/node_modules/**"
     ]
   },
+
   "functions": {
-    "source": "packages/functions"
+    "source": "functions"
   }
 }
