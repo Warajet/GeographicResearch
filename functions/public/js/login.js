@@ -1,5 +1,41 @@
 let loginForm = document.getElementById("login");
 
+// function checkLogin(form){
+//   const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+//     const login = form.username.value;
+//     const password = form.password.value;
+
+//     // eslint-disable-next-line promise/catch-or-return
+//     firebase
+//     .auth()
+//     .signInWithEmailAndPassword(login, password)
+//     .then(({ user }) => {
+//         // eslint-disable-next-line promise/no-nesting
+//         return user.getIdToken().then((idToken) => {
+//           return fetch('/sessionLogin', {
+//             method:'POST',
+//             headers: {
+//               "Content-Type": "application/json;charset=utf-8",
+//               "CSRF-Token": csrfToken,
+//             },
+//             body: JSON.stringify({ idToken , csrfToken}),
+//           });
+//         });
+//     })
+//       .then(() => {
+//         return firebase.auth().signOut();
+//       })
+//       // eslint-disable-next-line promise/always-return
+//       .then(() => {
+//         window.location.assign("/");
+//       })
+//       .catch((error) => {
+//         // eslint-disable-next-line no-alert
+//         alert(error.message);
+//       });
+//     return false;
+// }
+
 loginForm.addEventListener("submit", (event) => {
     event.preventDefault();
     const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
@@ -40,9 +76,11 @@ loginForm.addEventListener("submit", (event) => {
 
 firebase.auth().onAuthStateChanged(firebaseUser => {
   if(firebaseUser){
+    console.log("FirebaseUser Login successful");
     console.log(firebaseUser);
   }
   else{
     console.log("Not Logged in");
   }
 });
+

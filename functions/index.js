@@ -24,15 +24,17 @@ const path = require('path');
 
 // Initialize firebase application
 var serviceAccount = require('./service_account.json');
+const { firebase } = require('firebase-functions-helper');
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
     databaseURL: "https://sadao-f4a1e.firebaseio.com"
 });
+
 const app = express();
 const csrfMiddleware = csrf({cookie: true});
 
 app.engine('hbs', engines.handlebars);
-app.set('views', path.join(__dirname, "views/"));
+app.set('views', "./views");
 app.set('view engine', 'hbs');
 
 
@@ -100,36 +102,17 @@ app.get('/logout', (req, res) =>  {
 
 // API handling heatmap page
 app.get('/', async (req, res) => {
-    res.render('heatmap');
+    // res.render('heatmap');
 
-    // let sessionCookie = req.cookies.session || "";
-    // admin
-    // .auth()
-    // .verifySessionCookie(sessionCookie, true)
-    // .then(() => {
-    //     res.render('heatmap');
-    // })
-    // .catch((error) => {
-    //     res.redirect("/login");
-    // });
+    verifySession(req,res,"heatmap");
     
 });
 
 // API handling administration on each samples
 app.get('/samples', async (req,res) => {
-    res.render('admin', {csrfToken: token});
+    // res.render('admin', {csrfToken: token});
     
-    // let sessionCookie = req.cookies.session || "";
-
-    // admin
-    // .auth()
-    // .verifySessionCookie(sessionCookie, true)
-    // .then(() => {
-    //    res.render('admin', {csrfToken: token});
-    // })
-    // .catch((error) => {
-    //    res.redirect("/login");
-    // });  
+    verifySession(req,res,"admin");
 });
 
 
@@ -230,18 +213,9 @@ app.post('/heatmap/upload', (req, res) => {
 
 // API for handling parameters
 app.get('/settings', (req, res) => {
-    res.render('settings', {csrfToken: token});
+    // res.render('settings', {csrfToken: token});
     
-    // let sessionCookie = req.cookies.session || "";
-
-    // admin.auth()
-    // .verifySessionCookie(sessionCookie, true)
-    // .then(() => {
-    //     res.render('settings', {csrfToken: token});
-    // })
-    // .catch((error) => {
-    //    res.redirect("/login");
-    // });
+    verifySession(req,res,"settings");
 });
 
 app.put('/settings/:parameterName', (req,res) => {
@@ -274,6 +248,20 @@ exports.zoningMap = functions.https.onRequest((request, response) => {
     .on('end', () => {response.send(zoning_coordinates);});
 
 });
+
+// Helper function verify session Cookie
+function verifySession(req, res, view){
+    let sessionCookie = req.cookies.session || "";
+
+    admin.auth()
+    .verifySessionCookie(sessionCookie, true)
+    .then(() => {
+        res.render(view, {csrfToken: token});
+    })
+    .catch((error) => {
+       res.redirect("/login");
+    });
+}
 
 
 

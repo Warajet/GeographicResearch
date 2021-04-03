@@ -1,0 +1,9 @@
+{
+    "rules": {
+      ".read": true,
+      ".write": true,
+      "sampling_data": {
+        ".indexOn": ["latitude", "longitude"]
+      }
+    }
+  }
