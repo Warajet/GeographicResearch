@@ -9,6 +9,8 @@ var selected_date;
 var selected_zone;
 var data = [];
 var sample_list = [];
+const SAMPLE_START = 0;
+const SAMPLE_PER_PAGE = 30;
 
 // Variables related to Firebase realtime database
 var firebase_db = firebase.database();
@@ -67,6 +69,8 @@ form.addEventListener("submit", function(event) {
 async function displaySampleTable(sample){
     sample_list = [];
     $("#sample_table tbody").empty();
+    document.getElementById("text-start").innerHTML= SAMPLE_START;
+    document.getElementById("text-end").innerHTML= SAMPLE_PER_PAGE;
     var sample_list = await sample;
     for(i = 0; i < sample_list.length; i++){
         var tableRef = samples_table.getElementsByTagName('tbody')[0];
@@ -108,7 +112,58 @@ async function displaySampleTable(sample){
         edit_cell.appendChild(save_btn);
         delete_cell.appendChild(createButton("Delete", "del"+sample_list[i].key));
     }
+    document.getElementById("text-start").innerHTML= SAMPLE_START;
+    var size_li = $("#sample_table tbody tr").length;
+    var end = SAMPLE_PER_PAGE;
+    document.getElementById("text-total").innerHTML= "Total: " + size_li;
+    if(size_li < end){
+      document.getElementById("text-end").innerHTML= size_li;
+      end  = size_li;
+    }
+    displaySliceOfTableList(SAMPLE_START, end);
+
+    adjustList();
 }
+function displaySliceOfTableList(start, end){
+    $("#sample_table tbody tr").hide();
+    $("#sample_table tbody tr").slice(start, end).show();
+}
+
+function adjustList(){
+  var start = SAMPLE_START;
+  var end = SAMPLE_PER_PAGE;
+  size_li = $("#sample_table tbody tr").length;
+  document.getElementById("text-total").innerHTML= "Total: " + size_li;
+  $('#previous-btn').click(function () {
+     if(start >0)
+     {
+         $("#sample_table tbody tr").hide();
+         start = start - SAMPLE_PER_PAGE;
+         end = end - SAMPLE_PER_PAGE;
+         displaySliceOfTableList(start, end);
+         document.getElementById("text-start").innerHTML= start;
+         document.getElementById("text-end").innerHTML= end;
+     }
+  });
+  
+  $('#next-btn').click(function () {
+     if(end < size_li)
+     {
+         $("#sample_table tbody tr").hide();
+         start = start + SAMPLE_PER_PAGE;
+         end = end + SAMPLE_PER_PAGE;
+         displaySliceOfTableList(start, end);
+         document.getElementById("text-start").innerHTML= start;
+         if(end + SAMPLE_PER_PAGE > size_li){
+          document.getElementById("text-end").innerHTML= size_li;
+         }else{
+          document.getElementById("text-end").innerHTML= end;
+         }
+     }
+  });
+}
+
+
 
 function createButton(button_label, id){
   var button = document.createElement("button");
@@ -322,7 +377,7 @@ function reloadData(){
         sample_zone_control.add(option);
       }
     }  
-
+    
 
 getDistinctDate();
 displayLocationList();
