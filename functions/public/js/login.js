@@ -1,4 +1,10 @@
-let loginForm = document.getElementById("login");
+function getCookie(name) {
+  const v = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
+  return v ? v[2] : null;
+}
+
+firebase.auth().setPersistence(firebase.auth.Auth.Persistence.NONE);
+
 function checkUserSIEmail(){
   var userSIEmail = document.getElementById("userSIEmail");
   var userSIEmailFormate = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -14,6 +20,7 @@ function checkUserSIEmail(){
       document.getElementById("userSIEmailError").style.display = "none";
   }
 }
+
 // xxxxxxxxxx Sign In Password Validation xxxxxxxxxx
 function checkUserSIPassword(){
   var userSIPassword = document.getElementById("userSIPassword");
@@ -31,41 +38,135 @@ function checkUserSIPassword(){
   }
 }
 
-function signIn(){
-  var userSIEmail = document.getElementById("userSIEmail").value;
-  var userSIPassword = document.getElementById("userSIPassword").value;
-  var userSIEmailFormate = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  var userSIPasswordFormate = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{10,}/;      
+function signIn() {
+    var userSIEmail = document.getElementById("userSIEmail").value;
+    var userSIPassword = document.getElementById("userSIPassword").value;
+    // const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+    var userSIEmailFormate = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    var userSIPasswordFormate = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{10,}/;      
 
-  var checkUserEmailValid = userSIEmail.match(userSIEmailFormate);
-  var checkUserPasswordValid = userSIPassword.match(userSIPasswordFormate);
+    var checkUserEmailValid = userSIEmail.match(userSIEmailFormate);
+    var checkUserPasswordValid = userSIPassword.match(userSIPasswordFormate);
 
-  if(checkUserEmailValid == null){
-      return checkUserSIEmail();
-  }else if(checkUserPasswordValid == null){
-      return checkUserSIPassword();
-  }else{
-      firebase.auth().signInWithEmailAndPassword(userSIEmail, userSIPassword).then((success) => {
-          swal({
-              type: 'successfull',
-              title: 'Succesfully signed in', 
-          }).then((value) => {
-              setTimeout(function(){
-                  window.location.assign("/");
-              }, 1000)
-          });
+    if(checkUserEmailValid == null){
+        return checkUserSIEmail();
+    }else if(checkUserPasswordValid == null){
+        return checkUserSIPassword();
+    }else{
+      // When the user signs in with email and password.
+      firebase.auth().signInWithEmailAndPassword(userSIEmail, userSIPassword).then(({user}) => {
+        // Get the user's ID token as it is needed to exchange for a session cookie.
+        return user.getIdToken().then(idToken => {
+          // Session login endpoint is queried and the session cookie is set.
+          // CSRF protection should be taken into account.
+          // ...
+          return sendToken(idToken);
+        });
+      // }).then(() => {
+      //   // A page redirect would suffice as the persistence is set to NONE.
+      //   return firebase.auth().signOut();
+      }).then(() => {
+        window.location.assign('/');
       }).catch((error) => {
-          // Handle Errors here.
-          var errorCode = error.code;
-          var errorMessage = error.message;
-          swal({
-              type: 'error',
-              title: 'Error',
-              text: "Error",
-          })
-      });
-  }
+              // Handle Errors here.
+              var errorCode = error.code;
+              var errorMessage = error.message;
+              Swal.fire({
+                  type: 'error',
+                  title: errorCode,
+                  text: errorMessage,
+              })
+          });
+
+
+      // firebase.auth().signInWithEmailAndPassword(userSIEmail, userSIPassword).then(function(user) {
+      //   // Get the user's ID token as it is needed to exchange for a session cookie.
+      //   firebase.auth().currentUser.getIdToken(true).then(function(idToken) {
+      //   // Session login endpoint is queried and the session cookie is set.
+      //   // CSRF protection should be taken into account.
+      //   // ...
+      //     return sendToken(idToken);
+      //   });
+          
+      //   // return fetch('/sessionLogin', {
+      //   //           method:'POST',
+      //   //           headers: {
+      //   //             "Content-Type": "application/json;charset=utf-8",
+      //   //             "CSRF-Token": csrfToken,
+      //   //           },
+      //   //           body: JSON.stringify({ idToken , csrfToken}),
+      //   //         });
+      // }).then(() => {
+      //   window.location.assign('/');
+      // })
+      //   .catch((error) => {
+      //     var errorCode = error.code;
+      //     var errorMessage = error.message;
+      //     alert(errorMessage);  
+      // });
+
+      //   firebase.auth().signInWithEmailAndPassword(userSIEmail, userSIPassword).then(({user}) => {
+      //     return user.getIdToken().then((idToken) => {
+      //       return fetch('/sessionLogin', {
+      //         method:'POST',
+      //         headers: {
+      //           "Content-Type": "application/json;charset=utf-8",
+      //           "CSRF-Token": csrfToken,
+      //         },
+      //         body: JSON.stringify({ idToken , csrfToken}),
+      //       });
+      //     });
+      // }).then(() => {
+      //   window.location.assign("/");
+      // })
+      //   .then(() => {
+      //     return firebase.auth().signOut();
+      //   })
+      //   // eslint-disable-next-line promise/always-return
+      //       // Swal.fire({
+      //       //     type: 'successfull',
+      //       //     title: 'Succesfully signed in', 
+      //       // }).then((value) => {
+      //       //     setTimeout(function(){
+      //       //         window.location.assign("/");
+      //       //     }, 1000)
+      //       // });
+      //   .catch((error) => {
+      //       // Handle Errors here.
+      //       var errorCode = error.code;
+      //       var errorMessage = error.message;
+      //       Swal.fire({
+      //           type: 'error',
+      //           title: errorCode,
+      //           text: errorMessage,
+      //       })
+      //   });
+      //   return false;
+
+      return false;
+    }
 }
+
+function sendToken(idToken) {
+    console.log("Posting " + idToken);
+    var xhr = new XMLHttpRequest();
+    var params = `token=${idToken}`;
+    xhr.open('POST', "/sessionLogin", true);
+    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    return new Promise(function(resolve, reject) {
+      xhr.onreadystatechange = function() {//Call a function when the state changes.
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                resolve();
+            } else if (xhr.readyState == 4 && xhr.status != 200) {
+                reject("Invalid http return status");
+            }
+        }
+      return xhr.send(params);
+    });
+  }
+
+
+
 
 // loginForm.addEventListener("submit", (event) => {
 //     event.preventDefault();
@@ -114,4 +215,3 @@ firebase.auth().onAuthStateChanged(firebaseUser => {
     console.log("Not Logged in");
   }
 });
-
