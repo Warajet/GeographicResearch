@@ -1,4 +1,5 @@
 // xxxxxxxxxx Working For Sign Up Form xxxxxxxxxx
+
 // xxxxxxxxxx Full Name Validation xxxxxxxxxx
 function checkUserFullName(){
     var userSurname = document.getElementById("userFullName").value;
@@ -118,10 +119,10 @@ function signUp(){
             // Handle Errors here.
             var errorCode = error.code;
             var errorMessage = error.message;
-            swal({
+            Swal.fire({
                 type: 'error',
                 title: 'Error',
-                text: "Error",
+                text: errorCode + ": " + errorMessage,
             })
         });
     }
