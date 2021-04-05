@@ -51,7 +51,7 @@ function checkUserSIPassword() {
 function signIn() {
     var userSIEmail = document.getElementById("userSIEmail").value;
     var userSIPassword = document.getElementById("userSIPassword").value;
-    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+    // const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
     var userSIEmailFormate = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     var userSIPasswordFormate = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{10,}/;
 

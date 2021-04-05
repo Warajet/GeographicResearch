@@ -45,15 +45,15 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-app.use(csrfMiddleware);
+// app.use(csrfMiddleware);
 let token;
 
-app.all("*", (req, res, next) => {
-    token = req.csrfToken();
-    res.cookie("XSRF-TOKEN", token);
-    res.locals._csrf = token;
-    next();
-});
+// app.all("*", (req, res, next) => {
+//     token = req.csrfToken();
+//     res.cookie("XSRF-TOKEN", token);
+//     res.locals._csrf = token;
+//     next();
+// });
 
 const db = admin.database();
 
