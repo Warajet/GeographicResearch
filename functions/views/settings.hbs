@@ -1,118 +1,124 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="csrf-token" content="{{csrfToken}}">
-        <title>Sadao Geospatial data</title>
-        <!-- Bootstrap CSS CDN -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
-        <!-- Font Awesome JS -->
-        <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
-        <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{csrfToken}}">
+    <title>Sadao Geospatial data</title>
+    <!-- Bootstrap CSS CDN -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
-        <link rel="stylesheet" href="/css/sidebar.css">
-    </head>
-    <body>
-        <div class="wrapper">
-            <!-- Sidebar  -->
-            <nav id="sidebar">
-                <div class="sidebar-header">
-                    <h3>Geographic Research</h3>
-                    <strong>GR</strong>
+    <!-- Font Awesome JS -->
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js"
+        integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ"
+        crossorigin="anonymous"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js"
+        integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY"
+        crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="/css/sidebar.css">
+</head>
+
+<body>
+    <div class="wrapper">
+        <!-- Sidebar  -->
+        <nav id="sidebar">
+            <div class="sidebar-header">
+                <h3>Geographic Research</h3>
+                <strong>GR</strong>
+            </div>
+
+            <ul class="list-unstyled components">
+                <li>
+                    <a href="#SampleSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fas fa-home"></i>
+                        Survey
+                    </a>
+                    <ul class="collapse list unstyled" id="SampleSubmenu">
+                        <li>
+                            <a href="/samples"> Tested Samples</a>
+                        </li>
+                        <li>
+                            <a href="/samples/raw"> Raw Samples</a>
+                        </li>
+
+                    </ul>
+                </li>
+                <li>
+                    <a href="/">
+                        <i class="fas fa-map"></i>
+                        Heatmap
+                    </a>
+                </li>
+                <li>
+                    <a href="/heatmap/upload">
+                        <i class="fas fa-chart-line"></i>
+                        Upload File
+                    </a>
+                </li>
+
+                <li class="active">
+                    <a href="/settings">
+                        <i class="fas fa-cogs"></i>
+                        Setting Parameters
+                    </a>
+                </li>
+
+                <li>
+                    <a href="/logout">
+                        <i class="fas fa-sign-out-alt"></i>
+                        Logout
+                    </a>
+                </li>
+
+
+            </ul>
+
+        </nav>
+
+        <!-- Page Content  -->
+        <div id="content">
+
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="container-fluid">
+
+                    <button type="button" id="sidebarCollapse" class="btn btn-info">
+                        <i class="fas fa-align-left"></i>
+                        <span>Sidebar</span>
+                    </button>
+
                 </div>
-        
-                <ul class="list-unstyled components">
-                    <li>
-                        <a href="#SampleSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-                            <i class="fas fa-home"></i>
-                            Survey 
-                        </a>
-                        <ul class="collapse list unstyled" id="SampleSubmenu">
-                            <li>
-                                <a href="/samples"> Tested Samples</a>
-                            </li>
-                            <li>
-                                <a href="/samples/raw"> Raw Samples</a>
-                            </li>
-
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="/">
-                            <i class="fas fa-map"></i>
-                            Heatmap
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/heatmap/upload">
-                            <i class="fas fa-chart-line"></i>
-                            Upload File
-                        </a>
-                    </li>
-
-                    <li class="active" >
-                        <a href="/settings">
-                            <i class="fas fa-cogs"></i>
-                            Setting Parameters
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="/logout">
-                            <i class="fas fa-sign-out-alt"></i>
-                            Logout
-                        </a>
-                    </li>
-
-
-                </ul>
-        
             </nav>
-        
-            <!-- Page Content  -->
-            <div id="content">
-        
-                <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                    <div class="container-fluid">
-        
-                        <button type="button" id="sidebarCollapse" class="btn btn-info">
-                            <i class="fas fa-align-left"></i>
-                            <span>Sidebar</span>
-                        </button>
+            <section class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-lg-6">
+                            <h1>Setting Parameters</h1>
+                        </div>
+                    </div>
+                </div>
+            </section>
 
-                    </div>
-                </nav>
-                <section class="content-header">
-                    <div class="container-fluid">
-                         <div class="row mb-2">
-                            <div class="col-lg-6">
-                                <h1>Setting Parameters</h1>
-                            </div>
-                        </div>  
-                    </div>
-                </section>
-                
             <div class="row mb-2">
-          
+
                 <table class="table" id="parameters_table">
                     <thead class="thead-dark">
-                    <tr>
-                        <th>Parameter name</th>
-                        <th>Maximum</th>
-                        <th>Minimum</th>
-                    </tr>
+                        <tr>
+                            <th>Parameter name</th>
+                            <th>Maximum</th>
+                            <th>Minimum</th>
+                        </tr>
                     </thead>
                     <tbody>
                     </tbody>
                 </table>
             </div>
 
-            <div class="row" style="height: 375px">  </div>            
+            <div class="row" style="height: 375px"> </div>
         </div>
 
         <!-- The core Firebase JS SDK is always required and must be listed first -->
@@ -121,16 +127,23 @@
         <!-- TODO: Add SDKs for Firebase products that you want to use
             https://firebase.google.com/docs/web/setup#available-libraries -->
         <script src="https://www.gstatic.com/firebasejs/7.11.0/firebase-analytics.js"></script>
-    
+
         <script src="https://www.gstatic.com/firebasejs/7.11.0/firebase-auth.js"></script>
         <script src="https://www.gstatic.com/firebasejs/7.11.0/firebase-database.js"></script>
 
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
+
         <script src="/js/firebase_init.js"></script>
-        <script async defer src="/js/settings.js"> </script>   
-        <script src="/js/sidebar.js"></script> 
-    </body>
+        <script async defer src="/js/settings.js"> </script>
+        <script src="/js/sidebar.js"></script>
+</body>
+
 </html>

@@ -1,52 +1,54 @@
 /* Always set the map height explicitly to define the size of the div
  * element that contains the map. */
+
 #map {
-  height: 80%;
+    height: 80%;
 }
+
 
 /* Optional: Makes the sample page fill the window. */
-html, body{
-  height: 100%;
-  margin: 0px;
-  padding: 0px;
-  overflow: hidden;
+
+html,
+body {
+    height: 100%;
+    margin: 0px;
+    padding: 0px;
+    overflow: hidden;
 }
 
-
 #floating-panel {
-  position: absolute;
-  z-index: 5;
-  background-color: #fff;
-  padding: 5px;
-  border: 1px solid #999;
-  text-align: left;
-  font-family: 'Roboto','sans-serif';
-  line-height: 30px;
-  padding-left: 10px;
-  width: auto;
-  display: none;
+    position: absolute;
+    z-index: 5;
+    background-color: #fff;
+    padding: 5px;
+    border: 1px solid #999;
+    text-align: left;
+    font-family: 'Roboto', 'sans-serif';
+    line-height: 30px;
+    padding-left: 10px;
+    width: auto;
+    display: none;
 }
 
 .container {
-  background-color: #fff;
-  border: 1px solid #999;
-  padding: 5px;
-  margin: 5px;
-  left: 1%;
-  position: absolute;
-  width: 40%;
-  top: 40px;
-  z-index: 5;
-  width: 40%;
+    background-color: #fff;
+    border: 1px solid #999;
+    padding: 5px;
+    margin: 5px;
+    left: 1%;
+    position: absolute;
+    width: 40%;
+    top: 40px;
+    z-index: 5;
+    width: 40%;
 }
-
 
 #controls {
     top: 10px;
     left: 210px;
     width: 200px;
     height: 28px;
-  }
+}
 
 .nicebox {
     position: absolute;
@@ -56,100 +58,91 @@ html, body{
     z-index: 5;
     box-shadow: 0 4px 6px -4px #333;
     padding: 5px 10px;
-    background: rgb(255,255,255);
-    background: linear-gradient(to bottom,rgba(255,255,255,1) 0%,rgba(245,245,245,1) 100%);
+    background: rgb(255, 255, 255);
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 1) 0%, rgba(245, 245, 245, 1) 100%);
     border: rgb(229, 229, 229) 1px solid;
 }
 
 #legend {
-  display: flex;
-  display: -webkit-box;
-  padding: 1%;
-  position: absolute;
-  z-index: 5;
-  bottom: 24px;
-  right: 5%;
-  border:1px solid #999;
-  background-color: #fff;
-  width: 20%;
-  height: 6%;
+    display: flex;
+    display: -webkit-box;
+    padding: 1%;
+    position: absolute;
+    z-index: 5;
+    bottom: 24px;
+    right: 5%;
+    border: 1px solid #999;
+    background-color: #fff;
+    width: 20%;
+    height: 6%;
 }
 
 .color-key {
-  background: linear-gradient(to right,
-    hsl(5, 69%, 54%) 0%,
-    hsl(29, 71%, 51%) 17%,
-    hsl(54, 74%, 47%) 33%,
-    hsl(78, 76%, 44%) 50%,
-    hsl(102, 78%, 41%) 67%,
-    hsl(127, 81%, 37%) 83%,
-    hsl(151, 83%, 34%) 100%);
-  flex: 1;
-  -webkit-box-flex: 1;
-  margin: 0 5px;
-  text-align: left;
-  font-size: 1.0em;
-  line-height: 1.0em;
+    background: linear-gradient(to right, hsl(5, 69%, 54%) 0%, hsl(29, 71%, 51%) 17%, hsl(54, 74%, 47%) 33%, hsl(78, 76%, 44%) 50%, hsl(102, 78%, 41%) 67%, hsl(127, 81%, 37%) 83%, hsl(151, 83%, 34%) 100%);
+    flex: 1;
+    -webkit-box-flex: 1;
+    margin: 0 5px;
+    text-align: left;
+    font-size: 1.0em;
+    line-height: 1.0em;
 }
 
-#data-caret { margin-left: -5px; display: none; font-size: 20px; width: 14px}
-
+#data-caret {
+    margin-left: -5px;
+    display: none;
+    font-size: 20px;
+    width: 14px
+}
 
 #param-floating-panel {
-  display: flex;
-  display: -webkit-box;
-  text-align: center;
-  padding: 10px;
-  position: absolute;
-  z-index: 5;
-  top: 15px;
-  right: 5%;
-  border:1px solid #999;
-  background-color: #fff;
-  width: auto;
-  height: 80px;
+    display: flex;
+    display: -webkit-box;
+    text-align: center;
+    padding: 10px;
+    position: absolute;
+    z-index: 5;
+    top: 15px;
+    right: 5%;
+    border: 1px solid #999;
+    background-color: #fff;
+    width: auto;
+    height: 80px;
 }
 
-#info-floating-panel{
-  display: flex;
-  display: -webkit-box;
-  text-align: left;
-  position: absolute;
-
-  z-index: 5;
-  left: 3%;
-  top: 100px;
-
-  font-size: 12px;
-  border:1px solid #999;
-  background-color: #fff;
-
-
-
-  padding-left: 7px;
-  padding-right: 7px;
-
-  width: 40%;
-  height: 60%;
+#info-floating-panel {
+    display: flex;
+    display: -webkit-box;
+    text-align: left;
+    position: absolute;
+    z-index: 5;
+    left: 3%;
+    top: 100px;
+    font-size: 12px;
+    border: 1px solid #999;
+    background-color: #fff;
+    padding-left: 7px;
+    padding-right: 7px;
+    width: 40%;
+    height: 60%;
 }
 
-div.scrollable{
-  overflow: scroll;
+div.scrollable {
+    overflow: scroll;
 }
 
-td, th {
-  border: 1px solid #dddddd;
-  text-align: left;
-  padding: 8px;
+td,
+th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
 }
 
 tr:nth-child(even) {
-  background-color: #dddddd;
+    background-color: #dddddd;
 }
 
 table {
-  font-family: arial, sans-serif;
-  border-collapse: collapse;
-  width: 100%;
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
 }
-
